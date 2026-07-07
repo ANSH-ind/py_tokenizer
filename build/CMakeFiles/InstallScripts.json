@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/data/data/com.termux/files/home/py_tokenizer_v2/py_tokenizer/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

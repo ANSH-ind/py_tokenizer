@@ -1,5 +1,0 @@
-/data/data/com.termux/files/home/py_tokenizer_v2/py_tokenizer/build/CMakeFiles/tokenizer_core.dir
-/data/data/com.termux/files/home/py_tokenizer_v2/py_tokenizer/build/CMakeFiles/tokenizer.dir
-/data/data/com.termux/files/home/py_tokenizer_v2/py_tokenizer/build/CMakeFiles/py_tokenizer.dir
-/data/data/com.termux/files/home/py_tokenizer_v2/py_tokenizer/build/CMakeFiles/edit_cache.dir
-/data/data/com.termux/files/home/py_tokenizer_v2/py_tokenizer/build/CMakeFiles/rebuild_cache.dir

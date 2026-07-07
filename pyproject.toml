@@ -1,0 +1,57 @@
+[build-system]
+requires = [
+    "scikit-build-core>=0.10",
+    "pybind11>=3.0"
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "py_tokenizer"
+version = "0.0.2"
+description = "High-performance Byte Pair Encoding (BPE) tokenizer written in modern C++ with Python bindings."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+authors = [
+    { name = "Ansh Raj", email = "anshraj0000000001@gmail.com" }
+]
+
+keywords = [
+    "tokenizer",
+    "bpe",
+    "byte-pair-encoding",
+    "nlp",
+    "llm",
+    "transformer",
+    "ai",
+    "machine-learning",
+    "cpp",
+    "pybind11",
+    "tokenization"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[project.urls]
+Homepage = "https://anshstudios.pages.dev/portfolio"
+Documentation = "https://anshstudios.pages.dev/py_tokenizer"
+Repository = "https://github.com/ANSH-ins/py_tokenizer"
+Issues = "https://github.com/ANSH-ins/py_tokenizer/issues"
+
+[tool.scikit-build]
+build-dir = "build"
+
+[tool.scikit-build.cmake]
+build-type = "Release"
+
+[tool.scikit-build.wheel]
+packages = []
