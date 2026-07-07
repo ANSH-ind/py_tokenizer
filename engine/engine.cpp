@@ -1,5 +1,6 @@
 #include "engine.h"
 #include <iostream>
+#include <cstdint>
 #include <unordered_map>
 #include <utility>
 
