@@ -8,10 +8,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      id-token: write
-
+    # Note: permissions block hata diya hai kyunki hum API Token use kar rahe hain
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
