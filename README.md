@@ -82,16 +82,16 @@ Requires Python 3.8 or newer. No manual C++ compilation is required — the nati
 The production tokenizer is the main, high-performance tokenizer in this package. It is written in C++ and designed to process large text files efficiently using multithreading.
 
 ```python
-from py_tokenizer import engine
+import py_tokenizer
 
-engine(
-    "/storage/emulated/0/Download/big.txt/big.txt",
-    4,
-    True,
-    False,
-    100,
-    8,
-    True
+engine = py_tokenizer.engine(
+    file_path="/storage/emulated/0/file_info.json",
+    chunk_size=4,
+    get_file_info=True,
+    normalize=False,
+    epoch=100,
+    cpu_count=8,
+    use_thread=True
 )
 ```
 
