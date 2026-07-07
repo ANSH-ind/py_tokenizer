@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# ==========================
+# Dependencies
+# ==========================
+
 include(FetchContent)
 
 FetchContent_Declare(
@@ -16,9 +20,13 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(pybind11)
 
+find_package(Python COMPONENTS Interpreter Development REQUIRED)
+
+
 # ==========================
-# Common library
+# Core Library
 # ==========================
+
 add_library(tokenizer_core STATIC
     src/provider.cpp
     src/splitter.cpp
@@ -37,9 +45,11 @@ target_include_directories(tokenizer_core
 
 target_compile_features(tokenizer_core PUBLIC cxx_std_17)
 
+
 # ==========================
-# Executable
+# CLI Executable
 # ==========================
+
 add_executable(tokenizer
     main.cpp
 )
@@ -48,9 +58,11 @@ target_link_libraries(tokenizer
     PRIVATE tokenizer_core
 )
 
+
 # ==========================
-# Python module
+# Python Extension Module
 # ==========================
+
 pybind11_add_module(py_tokenizer
     src/binding.cpp
 )
@@ -59,6 +71,12 @@ target_link_libraries(py_tokenizer
     PRIVATE tokenizer_core
 )
 
-install(TARGETS py_tokenizer
+
+# ==========================
+# Installation
+# ==========================
+
+install(
+    TARGETS py_tokenizer
     LIBRARY DESTINATION .
 )
