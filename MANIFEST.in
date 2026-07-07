@@ -1,0 +1,19 @@
+include README.md
+include LICENSE
+include CMakeLists.txt
+
+recursive-include include *
+recursive-include src *
+recursive-include engine *
+
+include vocabulary.json
+include file_info.json
+
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude *.o
+global-exclude *.a
+global-exclude *.so
+global-exclude *.obj
+global-exclude *.dll
+global-exclude *.dylib
