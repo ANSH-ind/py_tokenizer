@@ -24,7 +24,7 @@ jobs:
           python -m pip install build scikit-build-core pybind11 cmake ninja
 
       - name: Build package
-        run: python -m build
+        run: python -m build --sdist
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
