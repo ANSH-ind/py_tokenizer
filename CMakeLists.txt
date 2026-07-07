@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# Git aur FetchContent ko hata diya. Ab CMake seedha pip se install hua pybind11 uthayega.
 find_package(pybind11 CONFIG REQUIRED)
 
 # ==========================
