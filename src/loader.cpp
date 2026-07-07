@@ -14,7 +14,7 @@ loader::loader(const std::string& file_path, const size_t chunk_size, bool normi
     }
     
     std::filesystem::path path(file_path);
-    file_extension = path.extension();
+    file_extension = path.extension().string();
     file_size = std::filesystem::file_size(file_path)/1024.0;
     file_size = std::round(file_size*1000.0)/1000.0;
     
