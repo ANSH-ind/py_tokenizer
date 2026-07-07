@@ -1,0 +1,1 @@
+/data/data/com.termux/files/usr/bin/c++ -O2 -g -DNDEBUG -Xlinker --dependency-file=CMakeFiles/tokenizer.dir/link.d CMakeFiles/tokenizer.dir/main.cpp.o -o tokenizer  libtokenizer_core.a

@@ -1,0 +1,12 @@
+{
+    "chunk size": 4,
+    "file extension": ".txt",
+    "file path": "/storage/emulated/0/Download/big.txt/big.txt",
+    "file size": 1.093,
+    "model version": "1.0_v1",
+    "normilize": false,
+    "tokenize by": "py_tokenizer",
+    "using data type": "uint64_t",
+    "using json file": "nlohmann json",
+    "vocabulary size": 124
+}

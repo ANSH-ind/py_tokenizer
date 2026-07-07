@@ -1,0 +1,2 @@
+/data/data/com.termux/files/usr/bin/llvm-ar qc libtokenizer_core.a CMakeFiles/tokenizer_core.dir/src/provider.cpp.o CMakeFiles/tokenizer_core.dir/src/splitter.cpp.o CMakeFiles/tokenizer_core.dir/src/loader.cpp.o CMakeFiles/tokenizer_core.dir/src/merger.cpp.o CMakeFiles/tokenizer_core.dir/src/freq_finder.cpp.o CMakeFiles/tokenizer_core.dir/engine/engine.cpp.o CMakeFiles/tokenizer_core.dir/engine/basic_engine.cpp.o
+/data/data/com.termux/files/usr/bin/llvm-ranlib libtokenizer_core.a
