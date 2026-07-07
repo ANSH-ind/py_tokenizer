@@ -1,140 +1,274 @@
-<h1 align="center">
-<img src="https://res.cloudinary.com/dbmcddwjd/image/upload/v1783410838/file_00000000a2b471fba91bcdf2f3a398fb_t6gln5.png" alt="py_tokenizer Logo" width="250">
-py_tokenizer
-</h1>
-<p align="center">
-<b>High-Performance, Multithreaded Byte-Pair Encoding (BPE) Tokenizer</b>
-</p>
-<p align="center">
-<a href="https://pypi.org/project/py_tokenizer_ansh/">
-<img src="https://img.shields.io/pypi/v/py_tokenizer_ansh.svg?style=flat-square&color=0073B7" alt="PyPI version">
-</a>
-<a href="https://www.python.org/downloads/">
-<img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python&logoColor=white" alt="Python Version">
-</a>
-<img src="https://img.shields.io/badge/C++-17-00599C.svg?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++17">
-<img src="https://img.shields.io/badge/Performance-Optimized-success.svg?style=flat-square" alt="Performance">
-<img src="https://img.shields.io/badge/Multithreading-Enabled-orange.svg?style=flat-square" alt="Multithreading">
-<a href="https://opensource.org/licenses/MIT">
-<img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License: MIT">
-</a>
-</p>
+<div align="center">
+
+# py_tokenizer
+
+### A high-performance C++ powered BPE tokenizer for Python, with a built-in engine for learning how tokenization actually works.
+
+[![Python](https://img.shields.io/badge/python-3.8%2B-blue?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![C++](https://img.shields.io/badge/core-Modern%20C%2B%2B-00599C?style=flat-square&logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green?style=flat-square)](#license)
+[![PyPI](https://img.shields.io/badge/pypi-py__tokenizer__ansh-blue?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/py_tokenizer_ansh/)
+[![Performance](https://img.shields.io/badge/performance-optimized-orange?style=flat-square)](#performance)
+[![Multithreaded](https://img.shields.io/badge/multithreading-enabled-purple?style=flat-square)](#architecture)
+
+</div>
+
+---
+
 ## Table of Contents
- * Introduction
- * Features
- * Installation
- * Quick Start
-   * 1. The Production Tokenizer
-   * 2. The Learning Tokenizer
- * Architecture
- * Why py_tokenizer?
- * Performance
- * Roadmap
- * Contributing
- * License
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [1. Production Tokenizer — `engine`](#1-production-tokenizer--engine)
+  - [2. Learning Tokenizer — `basic_engine`](#2-learning-tokenizer--basic_engine)
+- [Architecture](#architecture)
+- [Why py_tokenizer?](#why-py_tokenizer)
+- [Performance](#performance)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Author](#author)
+
+---
+
 ## Introduction
-Welcome to **py_tokenizer**.
-Natural Language Processing demands efficient preprocessing. When dealing with terabytes of text, traditional single-threaded tokenizers become severe bottlenecks. This package is designed to bridge the gap between heavy-duty production requirements and educational clarity.
-Written in Modern C++ and bound to Python, this library delivers extremely fast, memory-efficient tokenization tailored for large-scale real-world datasets, while simultaneously offering a secondary engine for learning and visualizing the intricacies of Byte-Pair Encoding (BPE).
+
+**py_tokenizer** is a Python package with a Modern C++ core, built to tokenize text using Byte Pair Encoding (BPE) — the same family of algorithm behind many production-grade language model tokenizers.
+
+Most tokenizer implementations you find while learning NLP fall into one of two camps: they are either too simplistic to be used on real data, or too abstracted to actually teach you what is happening under the hood. py_tokenizer was built to close that gap by shipping **two dedicated engines** instead of one compromise:
+
+- A **production engine**, written in C++ and exposed to Python through native bindings, designed to tokenize large text files quickly using multithreading.
+- A **learning engine**, written for clarity rather than speed, that prints every split and every merge step directly to your terminal so you can *see* BPE happen.
+
+The goal is simple: give developers a tokenizer fast enough for real datasets, and give students and researchers a tokenizer transparent enough to actually learn from.
+
+---
+
 ## Features
- * **Modern C++ Core**: Built on a high-performance C++ backend ensuring minimal memory overhead and maximum throughput.
- * **Python API**: Seamless, native-feeling Python bindings for effortless integration into existing Machine Learning pipelines.
- * **Multithreaded Processing**: Leverages concurrent CPU threads to tokenize massive text documents exponentially faster than standard sequential algorithms.
- * **Large File Support**: Safely processes files exceeding system RAM via chunked streaming and intelligent memory management.
- * **Dual-Engine Architecture**: Features a robust engine for production workloads and a basic_engine for educational and experimental purposes.
- * **Artifact Generation**: Automatically exports deterministic, highly reusable vocabulary.json and file_info.json artifacts.
- * **Clean API Design**: Strictly typed, beginner-friendly API surface that hides internal complexity without sacrificing power.
+
+- **Modern C++ core** — the production tokenizer is implemented in Modern C++ for speed, safety, and efficient memory management.
+- **Native Python bindings** — call high-performance C++ code directly from Python with a simple function call.
+- **Multithreaded processing** — large files are processed using multiple threads to significantly reduce tokenization time.
+- **Large file support** — designed from the ground up to handle real-world, large-scale text datasets rather than toy examples.
+- **Automatic vocabulary generation** — produces a reusable `vocabulary.json` you can load into downstream NLP pipelines.
+- **File metadata export** — produces `file_info.json` describing the processed dataset.
+- **Dedicated educational engine** — `basic_engine` is purpose-built for learning and demonstrating BPE, independent of the production pipeline.
+- **Clean, minimal API** — both engines are exposed through simple, explicit function calls with no hidden configuration.
+- **Beginner friendly** — clear parameters, predictable output, and readable terminal logs for the learning engine.
+- **High performance by design** — the production engine is architected for speed and scalability on real datasets.
+
+---
+
 ## Installation
-The package is officially hosted on PyPI. Install the specific stable release using pip:
+
+py_tokenizer is available on PyPI:
+
 ```bash
 pip install py_tokenizer_ansh==0.0.4
 ```
-> **Note:** Pre-compiled wheels are provided for major operating systems. Ensure you have a C++17 compatible compiler if building directly from source.
-> 
+
+Requires Python 3.8 or newer. No manual C++ compilation is required — the native extension ships prebuilt with the package.
+
+---
+
 ## Quick Start
-The library exports two primary APIs, each serving a distinct purpose in the NLP development lifecycle.
-### 1. The Production Tokenizer (engine)
-The engine function is the powerhouse of the library. It is strictly built for serious workloads, NLP preprocessing, and handling extremely large datasets.
+
+### 1. Production Tokenizer — `engine`
+
+The production tokenizer is the main, high-performance tokenizer in this package. It is written in C++ and designed to process large text files efficiently using multithreading.
+
 ```python
 from py_tokenizer import engine
-# Initialize the production tokenization pipeline
+
 engine(
-    "/storage/emulated/0/Download/big.txt/big.txt",  # 1. Target File
-    4,                                               # 2. Threads
-    True,                                            # 3. Normalize
-    False,                                           # 4. Strict Mode
-    100,                                             # 5. Target Vocab Size
-    8,                                               # 6. Chunk/Batch Size
-    True                                             # 7. Export Metadata
+    "/storage/emulated/0/Download/big.txt/big.txt",
+    4,
+    True,
+    False,
+    100,
+    8,
+    True
 )
 ```
-#### Parameter Breakdown
 
-| Pos | Parameter | Type | Description |
-| :--- | :--- | :--- | :--- |
-| **1** | file_path | str | Absolute path to the raw text document to be processed. |
-| **2** | threads | int | Number of concurrent threads to spawn for the splitting and merging phases. |
-| **3** | normalize | bool | Whether to apply standard text normalization (whitespace stripping, NFKC). |
-| **4** | strict_mode | bool | Toggles strict character fallback. If False, unknown bytes are gracefully handled. |
-| **5** | vocab_size | int | The desired final vocabulary size after BPE merging. |
-| **6** | batch_size | int | Memory allocation chunking size. Prevents Out-Of-Memory (OOM) errors on large files. |
-| **7** | export_meta | bool | Instructs the engine to generate detailed execution metrics. |
+**Parameters explained**
 
-#### Generated Output
-Upon successful execution, the engine writes two files directly to the working directory:
- 1. **vocabulary.json**: The final computed BPE vocabulary mapping (tokens to IDs). Ready to be loaded into your embedding layers.
- 2. **file_info.json**: A comprehensive metadata diagnostic file detailing execution time, thread utilization, token frequencies, and compression ratios.
-### 2. The Learning Tokenizer (basic_engine)
-The basic_engine is intentionally stripped down. It does not handle large files, nor does it spawn background threads. Its sole purpose is education: visualizing how BPE token merging works in real-time.
+| Position | Parameter | Description |
+|---|---|---|
+| 1 | `file_path` | Path to the input text file to be tokenized. Can point to very large datasets. |
+| 2 | `min_frequency` | Minimum frequency a token pair must reach before it is merged during BPE training. |
+| 3 | `normalize` | Whether to normalize the input text (e.g. casing/whitespace handling) before tokenization. |
+| 4 | `lowercase` | Whether to lowercase the input text before processing. |
+| 5 | `vocab_size` | Target vocabulary size — the number of merge operations / vocabulary entries to generate. |
+| 6 | `num_threads` | Number of threads used to parallelize tokenization across the input file. |
+| 7 | `save_output` | Whether to write the resulting vocabulary and file metadata to disk. |
+
+**Generated files**
+
+Running `engine(...)` produces two files in your working directory:
+
+- **`vocabulary.json`** — the learned BPE vocabulary, containing the merged tokens generated from your dataset. This file is reusable and can be loaded by downstream NLP pipelines that need a trained vocabulary.
+- **`file_info.json`** — metadata about the processed input file, such as file size and processing details, useful for logging, debugging, and reproducibility.
+
+This engine is intended for **serious workloads**: production pipelines, large corpora, and real datasets where performance and memory efficiency matter.
+
+---
+
+### 2. Learning Tokenizer — `basic_engine`
+
+The learning tokenizer is intentionally simple. It exists to help you understand *how* BPE actually works — one split, one merge, at a time — by printing every step to your terminal.
+
 ```python
 from py_tokenizer import basic_engine
+
 sentence = "hii this is an test sentance"
-# Run the educational BPE engine
+
 basic_engine(
     sentence,
     normalize=False,
     epoch=20
 )
 ```
-#### Parameter Breakdown
 
-| Parameter | Type | Description |
-| :--- | :--- | :--- |
-| sentence | str | A short string or sentence to tokenize and visualize. |
-| normalize | bool | Whether to apply basic text cleaning before visualization. |
-| epoch | int | The number of BPE merge iterations to perform and print to the terminal. | <br> > **Terminal Output:** This function prints directly to stdout, displaying the text split into base characters, followed by a step-by-step visualization of the most frequent pairs merging over the specified epoch count. <br> > <br> ## Architecture <br> The internal pipeline is highly optimized, moving data sequentially through multithreaded workers before compiling the final JSON artifacts. <br> ```text <br> +----------------------+       +-----------------------+       +-----------------------+
-| Raw Text Document | --> | Multithreaded Split | --> | Parallel BPE |
-| (Disk Streaming) |  | (Worker Pool) |  | Frequency Count | <br> +----------------------+       +-----------------------+       +-----------------------+
-| <br> v <br> +----------------------+       +-----------------------+       +-----------------------+
-| JSON Serialization | <-- | Vocabulary Builder | <-- | Iterative Merge |
-| (Disk I/O) |  | (ID Assignment) |  | (Target Vocab Size) | <br> +----------------------+       +-----------------------+       +-----------------------+
-| <br> v <br> +----------------------+
-| vocabulary.json |
-| file_info.json |
+**Parameters explained**
 
-+----------------------+
+| Parameter | Description |
+|---|---|
+| `sentence` | The input text (a single string) you want to tokenize and observe. |
+| `normalize` | Whether to normalize the text before running BPE (e.g. casing/whitespace). |
+| `epoch` | The number of BPE merge iterations to run — each epoch performs one merge step. |
+
+**Output**
+
+`basic_engine` does not write any files. Instead, it prints directly to the terminal:
+
+- The initial **split tokens** (the sentence broken into its starting units).
+- Each **merged token** produced at every epoch, so you can watch the vocabulary evolve step by step.
+
+This engine is **not** intended for large datasets. It exists purely for:
+
+- learning BPE
+- understanding token merging
+- practicing tokenizer concepts
+- education
+- experimenting
+
+It will continue to receive educational improvements and new learning-focused features over time, independent of the production engine.
+
+---
+
+## Architecture
+
+py_tokenizer follows a straightforward pipeline from raw text to a usable vocabulary:
+
 ```
+                 ┌────────────────────┐
+                 │      Raw Text       │
+                 │ (single file or     │
+                 │  large dataset)     │
+                 └─────────┬───────────┘
+                           │
+                           ▼
+                 ┌────────────────────┐
+                 │       Split         │
+                 │  Break text into    │
+                 │  base-level units   │
+                 └─────────┬───────────┘
+                           │
+                           ▼
+                 ┌────────────────────┐
+                 │      BPE Merge      │
+                 │  Repeatedly merge   │
+                 │  the most frequent  │
+                 │  adjacent pairs     │
+                 └─────────┬───────────┘
+                           │
+                           ▼
+                 ┌────────────────────┐
+                 │     Vocabulary      │
+                 │  Final set of       │
+                 │  learned tokens     │
+                 └─────────┬───────────┘
+                           │
+                           ▼
+                 ┌────────────────────┐
+                 │     JSON Export     │
+                 │ vocabulary.json     │
+                 │ file_info.json      │
+                 └────────────────────┘
+```
+
+The **production engine** runs this pipeline in C++, distributing the split and merge stages across multiple threads to process large files efficiently before exporting the final vocabulary and metadata to JSON.
+
+The **learning engine** runs the same conceptual pipeline — split, then merge — but does so step by step in Python-visible output, without threading or file export, so every stage is observable.
+
+---
+
 ## Why py_tokenizer?
-### The Multithreading Advantage
-Standard tokenizers written purely in Python suffer from the Global Interpreter Lock (GIL), forcing them to process text sequentially. py_tokenizer drops down into C++ to bypass the GIL, distributing chunks of your dataset across all available CPU cores. This results in near-linear scaling; a multi-core machine will process your dataset significantly faster.
-### The Two-Engine Philosophy
-Most libraries force you to choose between learning and deployment. Production tokenizers are too complex and obfuscated to learn from, while educational scripts crash when handed a 50GB corpus. We built two distinct APIs under one roof: use basic_engine to understand the mathematics, and engine to process your production data.
+
+A plain, single-threaded tokenizer works fine for small examples, but real datasets change the equation entirely. Reading, splitting, and merging tokens across millions of lines of text is computationally expensive, and doing it sequentially wastes available CPU resources.
+
+**Why multithreading matters**
+
+The production engine distributes tokenization work across multiple threads so that large files are processed using the hardware you already have, instead of leaving cores idle. This is the difference between a tokenizer that works on toy examples and one that is realistically usable on production-scale datasets.
+
+**Why two engines instead of one**
+
+Most tokenizer libraries force a tradeoff: either you get a fast black-box implementation you can't easily learn from, or a readable implementation that can't handle real data. py_tokenizer avoids that tradeoff by keeping the two goals separate:
+
+- `engine` — optimized purely for performance, scale, and reusable output.
+- `basic_engine` — optimized purely for clarity, step-by-step visibility, and learning.
+
+You get the right tool for the job, whether that job is training a vocabulary on a large corpus or teaching yourself how BPE merges actually happen.
+
+---
+
 ## Performance
-The production engine is strictly architected for speed and horizontal scalability on modern multi-core processors. Memory mapping and aggressive C++ string manipulation ensure that RAM usage remains flat regardless of dataset size.
-Extensive, standardized benchmarks against other industry tokenizers are currently being compiled and will be published in upcoming releases.
+
+The production engine is architected around multithreading, efficient memory usage, and a Modern C++ core specifically to handle large text files at scale.
+
+Formal benchmark numbers are not yet published. Rather than publishing estimated or unverified figures, this README intentionally omits performance claims until reproducible benchmarks are available. **Benchmarks will be added in a future release**, along with details on methodology and hardware used, so results can be independently verified.
+
+---
+
 ## Roadmap
-We are actively developing py_tokenizer. Our immediate focus areas include:
- * [ ] **Advanced Normalization**: Implementing robust, locale-aware Unicode normalization algorithms.
- * [ ] **Expanded BPE Features**: Support for byte-fallback, regex pre-tokenization, and custom merge rules.
- * [ ] **Visualization Suite**: Exporting HTML/CSS based tokenization visualizations for the basic_engine.
- * [ ] **Export Formats**: Adding support for Hugging Face tokenizer.json format compatibility.
- * [ ] **Hardware Acceleration**: Researching GPU/CUDA based parallel BPE compilation.
- * [ ] **Comprehensive Documentation**: Launching a dedicated documentation site with tutorials and benchmark data.
+
+py_tokenizer is under active development. Planned improvements include:
+
+- Better text normalization options
+- Improved Unicode and multilingual support
+- Additional BPE features and configuration options
+- Better visualization tools for the learning engine
+- Research into GPU-accelerated tokenization
+- Support for more vocabulary export formats
+- Expanded and more detailed documentation
+
+---
+
 ## Contributing
-We welcome contributions from the open-source NLP and C++ communities. Whether it is a bug report, a performance optimization, or a new feature request, your input is highly valued.
-Please ensure that pull requests targeting the C++ backend maintain strict memory safety and do not introduce data races into the multithreaded pipeline.
+
+Contributions, issues, and feature requests are welcome. Whether it's improving performance, extending the learning engine, fixing bugs, or improving documentation, all contributions help make py_tokenizer better for everyone.
+
+To contribute:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Open a pull request with a clear description of what you changed and why
+
+If you're new to the project, feel free to open an issue first to discuss the change you'd like to make.
+
+---
+
 ## License
-This project is licensed under the **MIT License**. You are free to use, modify, and distribute this software in both open-source and commercial projects.
-<p align="center">
-<i>Created by <b>Ansh Raj</b> — Maintainer and Technical Writer</i>
-</p>
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Author
+
+Created with ❤️ by **Ansh Raj**
+
