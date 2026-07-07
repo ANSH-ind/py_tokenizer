@@ -1,20 +1,33 @@
 <div align="center">
-<img src="https://res.cloudinary.com/dbmcddwjd/image/upload/v1783410838/file_00000000a2b471fba91bcdf2f3a398fb_t6gln5.png" alt="py_tokenizer Logo" width="250"/>
+<img src="https://res.cloudinary.com/dbmcddwjd/image/upload/v1783410838/file_00000000a2b471fba91bcdf2f3a398fb_t6gln5.png" alt="py_tokenizer Logo" width="250" />
 <h1>py_tokenizer</h1>
 <p><b>High-Performance, Multithreaded Byte-Pair Encoding (BPE) Tokenizer</b></p>
-<a href="https://pypi.org/project/py_tokenizer_ansh/"><img src="https://img.shields.io/pypi/v/py_tokenizer_ansh.svg?style=for-the-badge&color=0073B7" alt="PyPI version" /></a>
-<a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python Version" /></a>
-<a href="#"><img src="https://img.shields.io/badge/C++-17-00599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++17" /></a>
-<a href="#"><img src="https://img.shields.io/badge/Performance-Highly%20Optimized-success.svg?style=for-the-badge" alt="Performance" /></a>
-<a href="#"><img src="https://img.shields.io/badge/Multithreading-Enabled-orange.svg?style=for-the-badge" alt="Multithreading" /></a>
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License: MIT" /></a>
-<br />
-<br />
+<p>
+<a href="https://pypi.org/project/py_tokenizer_ansh/"><img src="https://img.shields.io/pypi/v/py_tokenizer_ansh.svg?style=flat-square&color=0073B7" alt="PyPI version" /></a>
+<a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python&logoColor=white" alt="Python Version" /></a>
+<img src="https://img.shields.io/badge/C++-17-00599C.svg?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++17" />
+<img src="https://img.shields.io/badge/Performance-Optimized-success.svg?style=flat-square" alt="Performance" />
+<img src="https://img.shields.io/badge/Multithreading-Enabled-orange.svg?style=flat-square" alt="Multithreading" />
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License: MIT" /></a>
+</p>
 </div>
+## Table of Contents
+ * Introduction
+ * Features
+ * Installation
+ * Quick Start
+   * 1. The Production Tokenizer
+   * 2. The Learning Tokenizer
+ * Architecture
+ * Why py_tokenizer?
+ * Performance
+ * Roadmap
+ * Contributing
+ * License
 ## Introduction
 Welcome to **py_tokenizer**.
 Natural Language Processing demands efficient preprocessing. When dealing with terabytes of text, traditional single-threaded tokenizers become severe bottlenecks. This package is designed to bridge the gap between heavy-duty production requirements and educational clarity.
-Written in Modern C++ and bound to Python, this package delivers extremely fast, memory-efficient tokenization tailored for large-scale real-world datasets, while simultaneously offering a secondary engine for learning and visualizing the intricacies of Byte-Pair Encoding (BPE).
+Written in Modern C++ and bound to Python, this library delivers extremely fast, memory-efficient tokenization tailored for large-scale real-world datasets, while simultaneously offering a secondary engine for learning and visualizing the intricacies of Byte-Pair Encoding (BPE).
 ## Features
  * **Modern C++ Core**: Built on a high-performance C++ backend ensuring minimal memory overhead and maximum throughput.
  * **Python API**: Seamless, native-feeling Python bindings for effortless integration into existing Machine Learning pipelines.
@@ -28,7 +41,8 @@ The package is officially hosted on PyPI. Install the specific stable release us
 ```bash
 pip install py_tokenizer_ansh==0.0.4
 ```
-*Note: Pre-compiled wheels are provided for major operating systems. Ensure you have a C++17 compatible compiler if building from source.*
+> **Note:** Pre-compiled wheels are provided for major operating systems. Ensure you have a C++17 compatible compiler if building directly from source.
+> 
 ## Quick Start
 The library exports two primary APIs, each serving a distinct purpose in the NLP development lifecycle.
 ### 1. The Production Tokenizer (engine)
@@ -48,7 +62,7 @@ engine(
 ```
 #### Parameter Breakdown
 
-| Position | Parameter | Type | Description |
+| Pos | Parameter | Type | Description |
 | :--- | :--- | :--- | :--- |
 | **1** | file_path | str | Absolute path to the raw text document to be processed. |
 | **2** | threads | int | Number of concurrent threads to spawn for the splitting and merging phases. |
@@ -59,8 +73,8 @@ engine(
 | **7** | export_meta | bool | Instructs the engine to generate detailed execution metrics. |
 
 #### Generated Output
-Upon successful execution, the engine writes two files directly to disk:
- 1. **vocabulary.json**: The final computed BPE vocabulary mapping (tokens to IDs). Ready to be loaded into your PyTorch or TensorFlow embedding layers.
+Upon successful execution, the engine writes two files directly to the working directory:
+ 1. **vocabulary.json**: The final computed BPE vocabulary mapping (tokens to IDs). Ready to be loaded into your embedding layers.
  2. **file_info.json**: A comprehensive metadata diagnostic file detailing execution time, thread utilization, token frequencies, and compression ratios.
 ### 2. The Learning Tokenizer (basic_engine)
 The basic_engine is intentionally stripped down. It does not handle large files, nor does it spawn background threads. Its sole purpose is education: visualizing how BPE token merging works in real-time.
@@ -78,9 +92,9 @@ basic_engine(
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| sentence | str | A short string/sentence to tokenize and visualize. |
+| sentence | str | A short string or sentence to tokenize and visualize. |
 | normalize | bool | Whether to apply basic text cleaning before visualization. |
-| epoch | int | The number of BPE merge iterations to perform and print to the terminal. | <br> **Terminal Output:** <br> This function prints directly to stdout, displaying the text split into base characters, followed by a step-by-step visualization of the most frequent pairs merging over the specified epoch count. <br> ## Architecture <br> The internal pipeline is highly optimized, moving data sequentially through multithreaded workers before compiling the final JSON artifacts. <br> ```text <br> +----------------------+       +-----------------------+       +-----------------------+
+| epoch | int | The number of BPE merge iterations to perform and print to the terminal. | <br> > **Terminal Output:** This function prints directly to stdout, displaying the text split into base characters, followed by a step-by-step visualization of the most frequent pairs merging over the specified epoch count. <br> > <br> ## Architecture <br> The internal pipeline is highly optimized, moving data sequentially through multithreaded workers before compiling the final JSON artifacts. <br> ```text <br> +----------------------+       +-----------------------+       +-----------------------+
 | Raw Text Document | --> | Multithreaded Split | --> | Parallel BPE |
 | (Disk Streaming) |  | (Worker Pool) |  | Frequency Count | <br> +----------------------+       +-----------------------+       +-----------------------+
 | <br> v <br> +----------------------+       +-----------------------+       +-----------------------+
@@ -94,9 +108,9 @@ basic_engine(
 ```
 ## Why py_tokenizer?
 ### The Multithreading Advantage
-Standard tokenizers written purely in Python suffer from the Global Interpreter Lock (GIL), forcing them to process text sequentially. py_tokenizer drops down into C++ to bypass the GIL, distributing chunks of your dataset across all available CPU cores. This results in near-linear scaling; a 16-core machine will process your dataset almost 16 times faster.
+Standard tokenizers written purely in Python suffer from the Global Interpreter Lock (GIL), forcing them to process text sequentially. py_tokenizer drops down into C++ to bypass the GIL, distributing chunks of your dataset across all available CPU cores. This results in near-linear scaling; a multi-core machine will process your dataset significantly faster.
 ### The Two-Engine Philosophy
-Most libraries force you to choose between learning and deployment. Production tokenizers are too complex and obfuscated to learn from, while educational scripts crash when handed a 50GB corpus. We built two distinct APIs under one roof: use basic_engine to understand the math, and engine to process your production data.
+Most libraries force you to choose between learning and deployment. Production tokenizers are too complex and obfuscated to learn from, while educational scripts crash when handed a 50GB corpus. We built two distinct APIs under one roof: use basic_engine to understand the mathematics, and engine to process your production data.
 ## Performance
 The production engine is strictly architected for speed and horizontal scalability on modern multi-core processors. Memory mapping and aggressive C++ string manipulation ensure that RAM usage remains flat regardless of dataset size.
 Extensive, standardized benchmarks against other industry tokenizers are currently being compiled and will be published in upcoming releases.
@@ -113,7 +127,7 @@ We welcome contributions from the open-source NLP and C++ communities. Whether i
 Please ensure that pull requests targeting the C++ backend maintain strict memory safety and do not introduce data races into the multithreaded pipeline.
 ## License
 This project is licensed under the **MIT License**. You are free to use, modify, and distribute this software in both open-source and commercial projects.
+<br />
 <div align="center">
-<p>Created with love by <b>Ansh Raj</b></p>
-<p>Maintainer and Technical Writer</p>
+<i>Created by <b>Ansh Raj</b> — Maintainer and Technical Writer</i>
 </div>
