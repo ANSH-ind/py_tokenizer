@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://res.cloudinary.com/dbmcddwjd/image/upload/v1783410838/file_00000000a2b471fba91bcdf2f3a398fb_t6gln5.png" alt="py_tokenizer logo" width="140" height="140" style="border-radius: 50%; object-fit: cover;" />
+
 # py_tokenizer
 
 ### A high-performance C++ powered BPE tokenizer for Python, with a built-in engine for learning how tokenization actually works.
