@@ -1,16 +1,24 @@
-<div align="center">
-<img src="https://res.cloudinary.com/dbmcddwjd/image/upload/v1783410838/file_00000000a2b471fba91bcdf2f3a398fb_t6gln5.png" alt="py_tokenizer Logo" width="250" />
-<h1>py_tokenizer</h1>
-<p><b>High-Performance, Multithreaded Byte-Pair Encoding (BPE) Tokenizer</b></p>
-<p>
-<a href="https://pypi.org/project/py_tokenizer_ansh/"><img src="https://img.shields.io/pypi/v/py_tokenizer_ansh.svg?style=flat-square&color=0073B7" alt="PyPI version" /></a>
-<a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python&logoColor=white" alt="Python Version" /></a>
-<img src="https://img.shields.io/badge/C++-17-00599C.svg?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++17" />
-<img src="https://img.shields.io/badge/Performance-Optimized-success.svg?style=flat-square" alt="Performance" />
-<img src="https://img.shields.io/badge/Multithreading-Enabled-orange.svg?style=flat-square" alt="Multithreading" />
-<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License: MIT" /></a>
+<h1 align="center">
+<img src="https://res.cloudinary.com/dbmcddwjd/image/upload/v1783410838/file_00000000a2b471fba91bcdf2f3a398fb_t6gln5.png" alt="py_tokenizer Logo" width="250">
+py_tokenizer
+</h1>
+<p align="center">
+<b>High-Performance, Multithreaded Byte-Pair Encoding (BPE) Tokenizer</b>
 </p>
-</div>
+<p align="center">
+<a href="https://pypi.org/project/py_tokenizer_ansh/">
+<img src="https://img.shields.io/pypi/v/py_tokenizer_ansh.svg?style=flat-square&color=0073B7" alt="PyPI version">
+</a>
+<a href="https://www.python.org/downloads/">
+<img src="https://img.shields.io/badge/Python-3.8+-blue.svg?style=flat-square&logo=python&logoColor=white" alt="Python Version">
+</a>
+<img src="https://img.shields.io/badge/C++-17-00599C.svg?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++17">
+<img src="https://img.shields.io/badge/Performance-Optimized-success.svg?style=flat-square" alt="Performance">
+<img src="https://img.shields.io/badge/Multithreading-Enabled-orange.svg?style=flat-square" alt="Multithreading">
+<a href="https://opensource.org/licenses/MIT">
+<img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="License: MIT">
+</a>
+</p>
 ## Table of Contents
  * Introduction
  * Features
@@ -127,7 +135,6 @@ We welcome contributions from the open-source NLP and C++ communities. Whether i
 Please ensure that pull requests targeting the C++ backend maintain strict memory safety and do not introduce data races into the multithreaded pipeline.
 ## License
 This project is licensed under the **MIT License**. You are free to use, modify, and distribute this software in both open-source and commercial projects.
-<br />
-<div align="center">
+<p align="center">
 <i>Created by <b>Ansh Raj</b> — Maintainer and Technical Writer</i>
-</div>
+</p>
