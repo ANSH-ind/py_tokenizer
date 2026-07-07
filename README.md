@@ -85,7 +85,7 @@ The production tokenizer is the main, high-performance tokenizer in this package
 import py_tokenizer
 
 engine = py_tokenizer.engine(
-    file_path="/storage/emulated/0/file_info.json",
+    file_path="/storage/emulated/0/data.txt",
     chunk_size=4,
     get_file_info=True,
     normalize=False,
