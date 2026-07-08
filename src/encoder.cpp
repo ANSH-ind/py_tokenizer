@@ -44,12 +44,6 @@ decoder::decoder(const std::string file_path, const size_t id): file_path(file_p
     if(!file){
         throw std::runtime_error("json file dosen't exist to decode the id");
     }    
-    file>>json_file;
-    
-    for(const auto& [key, value] : json_file.items()){
-        id_to_word[value] = key;
-    }
-    auto word = id_to_word.find(id);
 }
 
 std::string decoder::decode(const size_t id){

@@ -37,7 +37,7 @@ PYBIND11_MODULE(py_tokenizer, tokenizer){
         .def(
         py::init<std::string ,std::string>(),  
         py::arg("file_path") = "vocabulary.json",
-        py::arg("token")
+        py::arg("token") = ""
         )
         .def_static("encode",
         &encoder::get_encode,
