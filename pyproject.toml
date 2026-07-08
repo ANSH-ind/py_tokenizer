@@ -7,7 +7,11 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "py_tokenizer_ansh"
+<<<<<<< HEAD
 version = "0.0.5"
+=======
+version = "0.0.6"
+>>>>>>> a849062 (updatig py_tokenizer to version 0.0.6)
 description = "High-performance Byte Pair Encoding (BPE) tokenizer written in modern C++ with Python bindings."
 readme = "README.md"
 requires-python = ">=3.9"
