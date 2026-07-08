@@ -1,4 +1,5 @@
 #include "tokenizer/splitter.h"
+#include "tokenizer/provider.h"
 #include <thread>
 #include <mutex>
 #include <iostream>
@@ -6,19 +7,20 @@
 
 
 splitter::splitter(const std::string &sentance, size_t cpu_count, bool use_thread) : sentance(sentance), cpu_count(cpu_count), use_thread(use_thread){
+    auto codepoints = utf8_decode(sentance);
     if(use_thread) return;
     try{
-        if(sentance.size()>4000 && !use_thread){
+        if(codepoints.size()>4000 && !use_thread){
             throw std::runtime_error("warning! use thread function of py_tokenizer for batter optimization and time complexity");
         }
     }
     catch (const std::runtime_error& e){
         std::cerr<<e.what()<<std::endl;
     }
-    std::cout<<"running without thread"<<std::endl;
+    std::cout<<"running without thread\n"<<std::endl;
     std::vector<std::string> current_word;
-    for(size_t i{0}; i<sentance.size(); ++i){
-        if(sentance[i] ==' '){
+    for(size_t i{0}; i<codepoints.size(); ++i){
+        if(codepoints[i] ==' '){
             if(!current_word.empty()){
                 current_word.push_back("</ws>");
                 splited_sentance.push_back(current_word);
@@ -26,7 +28,7 @@ splitter::splitter(const std::string &sentance, size_t cpu_count, bool use_threa
             current_word.clear();
         }
         else{
-            current_word.push_back(std::string(1, sentance[i]));
+            current_word.push_back(utf8_encode(std::u32string(1, codepoints[i])));
         }
     }
     if(!current_word.empty()){
@@ -40,27 +42,28 @@ void splitter::splitter_thread(const size_t id)
 {
     if (sentance.empty())
         return;
-
+        
+    auto codepoint = utf8_decode(sentance);
     std::vector<Range> range;
-    size_t chunk_size = sentance.size() / cpu_count;
+    size_t chunk_size = codepoint.size() / cpu_count;
     for (size_t i{0}; i < cpu_count; ++i)
     {
         size_t start = i * chunk_size;
-        size_t end = (i == cpu_count - 1) ? sentance.size() : (i + 1) * chunk_size;
+        size_t end = (i == cpu_count - 1) ? codepoint.size() : (i + 1) * chunk_size;
 
         range.push_back({start, end});
     }
 
     if (range[id].start > 0)
     {
-        while (range[id].start < sentance.size() && sentance[range[id].start] != ' ')
+        while (range[id].start < codepoint.size() && codepoint[range[id].start] != ' ')
         {
             range[id].start++;
         }
     }
-    if (range[id].end < sentance.size())
+    if (range[id].end < codepoint.size())
     {
-        while (range[id].end < sentance.size() && sentance[range[id].end] != ' ')
+        while (range[id].end < codepoint.size() && codepoint[range[id].end] != ' ')
         {
             range[id].end++;
         }
@@ -74,15 +77,16 @@ void splitter::splitter_thread(const size_t id)
 //    std::string word = data.substr(pos + 1);
     for (size_t i = range[id].start; i < range[id].end; ++i)
     {
-        if (sentance[i] == '-')
+        if (codepoint[i] == '-')
             continue;
-        if (sentance[i] == ' ')
+        if (codepoint[i] == ' ')
         {
             if (!current_word.empty())
             {
                 for (const auto &c : current_word)
                 {
-                    local_token.push_back(c);
+                    auto ct = utf8_decode(c);
+                    local_token.push_back(utf8_encode(ct));
                 }
                 local_token.push_back("</ws>");
                 current_word.clear();
@@ -93,14 +97,15 @@ void splitter::splitter_thread(const size_t id)
         }
         else
         {
-            current_word.push_back(std::string(1, sentance[i]));
+            current_word.push_back(utf8_encode(std::u32string(1, codepoint[i])));
         }
     }
     if (!current_word.empty())
     {
         for (const auto &c : current_word)
         {
-            local_token.push_back(c);
+            auto tk = utf8_decode(c);
+            local_token.push_back(utf8_encode(tk));
         }
         local_token.push_back("</ws>");
         whole_token.push_back(local_token);
@@ -116,7 +121,8 @@ void splitter::splitter_thread(const size_t id)
         {
             for (const auto &word : vector_tk)
             {
-                token_carrier.push_back(word);
+                auto w = utf8_decode(word);
+                token_carrier.push_back(utf8_encode(w));
             }
             std::lock_guard<std::mutex> lock(mtx);
             all_splited_token.push_back(token_carrier);
@@ -140,7 +146,7 @@ void splitter::thread_runner(){
         threads.push_back(std::thread(&splitter::splitter_thread, this,i));
     }
     
-    for(size_t x{}; x<cpu_count; ++x){
+    for(size_t x{0}; x<cpu_count; ++x){
         threads[x].join();
     }
 }

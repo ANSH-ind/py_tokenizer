@@ -2,6 +2,16 @@
 #include <vector>
 #include <string>
 #include "tokenizer/loader.h"
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+#include <sstream>
+#include <iomanip>
+#include <cstdint>
+
+std::u32string utf8_decode(const std::string &input);
+
+std::string utf8_encode(const std::u32string& input);
 
 class provider{
     std::vector<std::vector<std::string>> whole_merged_tokens;    

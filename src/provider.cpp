@@ -1,11 +1,5 @@
 #include "tokenizer/provider.h"
 #include "tokenizer/json.hpp"
-#include <fstream>
-#include <iostream>
-#include <algorithm>
-#include <sstream>
-#include <iomanip>
-#include <cstdint>
 
 std::u32string utf8_decode(const std::string &input)
 {
@@ -115,13 +109,14 @@ provider::provider(const std::vector<std::vector<std::string>> &whole_merged_tok
         file_info["using data type"] = "uint64_t";
         file_info["using json file"] = "nlohmann json";
         file_info["tokenize by"] = "py_tokenizer";
-        file_info["model version"] = "1.0_v1";
+        file_info["model version"] = "1.0.6";
         std::ofstream file("file_info.json");
 
         file << file_info.dump(4);
     }
 
-    std::cout << "running process...";
+    std::cout << "running process..."<<std::endl;
+    
     std::vector<std::string> checker;
     size_t id = 0;
     for (const auto &tk : whole_merged_tokens)
@@ -146,7 +141,7 @@ provider::provider(const std::vector<std::vector<std::string>> &whole_merged_tok
     for (const auto &tokens : whole_merged_tokens)
     {
         for (const std::string &token : tokens)
-        {
+        {            
             std::u32string process_text = utf8_decode(token);
             
             std::string ready_text = utf8_encode(process_text);
