@@ -12,6 +12,7 @@ find_package(pybind11 CONFIG REQUIRED)
 # Common library
 # ==========================
 add_library(tokenizer_core STATIC
+    src/encoder.cpp
     src/provider.cpp
     src/splitter.cpp
     src/loader.cpp

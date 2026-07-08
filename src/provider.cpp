@@ -156,4 +156,3 @@ provider::provider(const std::vector<std::vector<std::string>> &whole_merged_tok
     std::ofstream output_file("vocabulary.json");
     output_file << vocabulary.dump(4);
 }
-
