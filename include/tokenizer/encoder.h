@@ -18,7 +18,6 @@ class decoder{
     private:
     std::string file_path;
     size_t id;
-    std::unordered_map<size_t, std::string> id_to_word;
     public:
     decoder(std::string file_path = "vocabulary.json", const size_t id = 0);
     
