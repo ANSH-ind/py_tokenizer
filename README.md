@@ -160,6 +160,19 @@ This engine is **not** intended for large datasets. It exists purely for:
 It will continue to receive educational improvements and new learning-focused features over time, independent of the production engine.
 
 ---
+you can also encode or decode if you have vocabulary.json file
+```python
+from py_tokenizer import encoder
+e = encoder(file_path = "example.json")
+e.encode(token="hii")
+
+```
+now you can also decode like this
+```python
+from py_tokenizer import decoder
+d = decider(file_path = 'example.json")
+d.decode(token_id=77)
+```
 
 ## Architecture
 
